@@ -15,7 +15,7 @@ const AdminSidebar: React.FC = () => {
   const navigate = useNavigate();
 
   const logoutUser = () =>{
-    dispatch(logout(user.token));
+    dispatch(logout(user != null?user.token:''));
     navigate('/dashboard');
   }
 

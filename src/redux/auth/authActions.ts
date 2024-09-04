@@ -9,6 +9,7 @@ export const login = (username: string, password: string) => async (dispatch: Di
     const user = {
         isAuthenticated: true,
         user: 'admin',
+        role:username=='admin@example.com'?'admin':'member',
         token:password,
     }
     dispatch(loginSuccess(user));
