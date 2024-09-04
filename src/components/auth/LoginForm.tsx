@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useAuthContext } from '../../context/AuthContext';
+
+import {useAppDispatch, useAppSelector} from '../../redux/hooks';
+import { login } from '../../redux/auth/authActions';
+
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
 
   const navigate = useNavigate();
-  const { login } = useAuthContext();
-  const [email, setEmail] = useState('');
+  const dispatch = useAppDispatch();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login({ email, password });
+    dispatch(login(username, password));
     navigate('/dashboard');
   };
 
@@ -22,8 +25,8 @@ const LoginForm: React.FC = () => {
         <Form.Label>Email</Form.Label>
         <Form.Control
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter email"
         />
       </Form.Group>

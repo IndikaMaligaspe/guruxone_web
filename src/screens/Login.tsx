@@ -1,12 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import LoginForm from '../components/auth/LoginForm';
-// import '../styles/Login.css';  // Add some styling if needed
 
-
-// interface Props {
-//     children: React.ReactNode
-//   }
 
 const Login: React.FC = ()   => {
   return (

@@ -1,16 +1,29 @@
 import React from 'react';
-import { useAuthContext } from '../context/AuthContext';
 import AdminDashboard from '../components/dashboards/AdminDashboard';
 import MemberDashboard from '../components/dashboards/MemberDashboard';
+import AdminSidebar from '../components/common/AdminSidebar';
+import { Container, Row, Col } from 'react-bootstrap';
+
+import {useAppSelector} from '../redux/hooks'
+
 
 const Dashboard: React.FC = () => {
-  const { user } = useAuthContext();
+  const user = useAppSelector((state) => state.auth.user);
 
-  if (user?.role === 'admin') {
-    return <AdminDashboard />;
-  }
-
-  return <MemberDashboard />;
+  return (
+    <Container fluid>
+      <Row>
+        <Col>
+        {
+        user?.role === 'admin' ?
+         (<AdminDashboard />)
+        :
+          (<MemberDashboard />)
+        }
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default Dashboard;
