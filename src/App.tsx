@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/routes/PrivateRoute'
 import Login from './screens/Login';
 import Dashboard from './screens/Dashboard';
-import Locations from './screens/Locations';
-import Members from './screens/Members';
+import Locations from './features/locations/Locations';
+import Members from './features/members/Members';
 import Schedules from './screens/Schedules';
 import AdminLayout from './components/common/AdminLayout';
 
