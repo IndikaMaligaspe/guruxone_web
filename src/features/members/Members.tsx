@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {fetchMembers, createMember} from './memberActions';
@@ -29,15 +29,25 @@ const Members: React.FC = () => {
       
       {!addEditMember ?
          <Container>
-            <h1>Members</h1>
-            <Button variant="primary" className="mb-3" onClick={e=>setAddEditMember(true)}>Add Member</Button>
-            <ListMembers members={members} />
+           <Row>
+            <Col lg={10}><h1>Create / Update Members</h1></Col>
+            <Col><Button variant="primary" className="mb-3" onClick={e=>setAddEditMember(true)}>Add Member</Button></Col>
+            </Row>
+            <br></br>
+            <Row>
+              <ListMembers members={members} />
+            </Row>
           </Container>
           :
           <Container> 
-              <h1>Create / Update Members</h1>
-              <Button variant="primary" className="mb-3" onClick={e=>setAddEditMember(false)}>List Member</Button>
+            <Row>
+              <Col lg={10}><h1>Create / Update Members</h1></Col>
+              <Col><Button variant="primary" className="mb-3" onClick={e=>setAddEditMember(false)}>List Member</Button></Col>
+            </Row> 
+            <br></br> 
+            <Row>
               <AddEditMembers />
+            </Row>
           </Container>
       }
     </Container>
