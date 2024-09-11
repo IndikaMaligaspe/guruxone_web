@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Container, Col, Form,  Table, Row, Badge } from 'react-bootstrap';
 
 import {MemberAchievment} from '../../../features/members/types'
+import StyledDataTable from '../../../components/styled/StyledDataTable';
 
 
 const achievementInit = {
@@ -21,80 +22,47 @@ const achievementInit = {
 
   const PersonalAchievements: React.FC <MemberAchievmentProps> = ({achievements})  =>{
     const [values, setValue] = useState(achievementInit);
+
+    const achievementCols = [
+      {'fieldName':'id', 'column':'#', 'type':'null', 'style':{width:'10px'}},
+      {'fieldName':'description', 'column':'Description', 'type':'string'},
+      {'fieldName':'achievementType', 'column':'Achievement Type', 'type':'string'},
+      {'fieldName':'dateAwarded', 'column':'Date Awarded', 'type':'date'},
+      {'fieldName':'venue', 'column':'Venue', 'type':'string'},
+      {'fieldName':'action', 'column':'Action', 'type':'action'}];
+    const [data, setData] = useState([]);
+  
+    const addnewRow = (e:undefined) =>{
+      console.log('Add Row -> ', e)
+    } 
+   
+    const editRow = (id:number) =>{
+      console.log('Edit Row -> ', id)
+    }
+  
+    const deleteRow = (id:number) =>{
+      console.log('Delete Row -> ', id)
+    }
+
     return (
       
       <Container>
           <Row>
             <Col>
-            <h3><Badge bg="primary" style={{width:'100%', alignItems:'left', textAlign:'left'}}>Personal Achievements</Badge></h3>          </Col>
+              <h3><Badge bg="primary" style={{width:'100%', alignItems:'left', textAlign:'left'}}>Personal Achievements</Badge></h3>          
+            </Col>
           </Row>
           <Row>
             <Col>
-              <Table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Description</th>
-                    <th>Awarded Type</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {
-                      achievements? achievements.map((r)=>{
-                          return(
-                            <tr>
-                              <td>{r.id}</td>
-                              <td>{r.description}</td>
-                              <td>{r.achievementType}</td>
-                              <td>{r.dateAwarded}</td>
-                              <td>{r.venue}</td>
-                              <td width={'10%'}>
-                                <Row style={{padding:0, gap:0}}>
-                                  <Col style={{padding:0}}><Button>E</Button></Col>
-                                  <Col style={{padding:0}}><Button>D</Button></Col>
-                                  <Col style={{padding:0}}><Button>S</Button></Col>
-                                </Row>
-                              </td>
-                            </tr>
-                          )
-                      }):null
-                    }
-                    <tr>
-                      <td>{achievements.length+1}</td>
-                      <td>
-                      <Form.Control
-                        name='description'
-                        value={values.description}>
-                      </Form.Control>
-                      </td>
-                      <td>
-                      <Form.Control
-                        name='awardedBy'
-                        value={values.achievementType}>
-                      </Form.Control>
-                      </td>
-                      <td>
-                      <Form.Control type='date'
-                        name='dateAwarded'
-                        value={values.dateAwarded}>
-                      </Form.Control>
-                      </td>
-                      <td><Form.Control
-                        name='venue'
-                        value={values.venue}>
-                      </Form.Control>
-                      </td>
-                      <td width={'10%'}>
-                        <Row style={{padding:0, gap:0, textAlign:'end'}}>
-                          <Col style={{padding:0}}><Button>Add</Button></Col>
-                        </Row>
-                      </td>
-                    </tr>
-                </tbody>
-              </Table>
+            <StyledDataTable
+              data={achievements} 
+              cols={achievementCols} 
+              addField = {true} 
+              crudField={true}
+              addnewRow={addnewRow}
+              editRow={editRow}
+              deleteRow={deleteRow}
+              />
             </Col>
           </Row>
       </Container>

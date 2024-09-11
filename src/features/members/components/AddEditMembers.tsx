@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { Button, Container, Col, Form,  Table, Row, Badge } from 'react-bootstrap';
 import PersonalInformation from './PersonalInformation';
 import PersonalAchievements from './PeronalAchievements';
-import {MemberAchievment, Payments} from '../../../features/members/types';
+import {Attendance, MemberAchievment, Payments} from '../../../features/members/types';
 import MemberPayments from './MemberPayments';
+import MemberAttendance from './MemberAttendance';
 
 
 
@@ -56,6 +57,24 @@ const samplePayments : Payments[]  = [
 },
 ]
 
+const attendance : Attendance[] = [
+  {
+    id:1,
+    title:'Tuesday Night bash',
+    location:'Al Barsha Dojo',
+    date:'2024-08-01',
+    time:'7:30 pm - 9:00 pm',
+    instructor:'Indika'
+  },
+  {
+    id:2,
+    title:'Saturday Morning',
+    location:'Al Nasr',
+    date:'2024-08-01',
+    time:'8:30 am - 9:30 am',
+    instructor:'Mukesh'
+  },
+]
 const AddEditMembers = () => {
   return (
     <Container>
@@ -64,6 +83,8 @@ const AddEditMembers = () => {
       <PersonalAchievements  achievements={sampleAchievements}/>
       <br></br>
       <MemberPayments payments={ samplePayments}/>
+      <br></br>
+      <MemberAttendance attendance={attendance}/>
     </Container>
   )
 }

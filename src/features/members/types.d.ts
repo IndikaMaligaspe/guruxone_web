@@ -24,3 +24,12 @@ export interface Payments{
   method:string;
   memberId:number;
 }
+
+export interface Attendance{
+  id:number;
+  title:string;
+  location:string;
+  date:string;
+  time:string;
+  instructor:string;
+}
