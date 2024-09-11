@@ -27,7 +27,7 @@ const achievementInit = {
       {'fieldName':'id', 'column':'#', 'type':'null', 'style':{width:'10px'}},
       {'fieldName':'description', 'column':'Description', 'type':'string'},
       {'fieldName':'achievementType', 'column':'Achievement Type', 'type':'string'},
-      {'fieldName':'dateAwarded', 'column':'Date Awarded', 'type':'date'},
+      {'fieldName':'dateAwarded', 'column':'Date Awarded', 'type':'date','style':{width:'30px'}},
       {'fieldName':'venue', 'column':'Venue', 'type':'string'},
       {'fieldName':'action', 'column':'Action', 'type':'action'}];
     const [data, setData] = useState([]);

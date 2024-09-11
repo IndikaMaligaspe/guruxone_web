@@ -59,8 +59,8 @@ import StylesPagination from './StylesPagination'
   }
 
   return (
-    <Container>
-      <Table>
+    <Container style={{width:'100%'}}>
+      <Table striped bordered hover style={{width:'100%'}}>
         <thead>
           <tr>
             {
@@ -85,8 +85,8 @@ import StylesPagination from './StylesPagination'
                             gap:1, 
                             display:'flex', 
                             textAlign:'end'}}>
-                            <Col style={{padding:0}}><Button onClick={e=>{editRow(d.id)}} variant='outline-info'><PencilSquare/></Button></Col>
-                            <Col style={{padding:0}}><Button onClick={e=>{deleteRow(d.id)}} variant='outline-danger'><Trash/></Button></Col>
+                            <Col style={{padding:3}}><Button onClick={e=>{editRow(d.id)}} variant='outline-info'><PencilSquare/></Button></Col>
+                            <Col style={{padding:3}}><Button onClick={e=>{deleteRow(d.id)}} variant='outline-danger'><Trash/></Button></Col>
                           </Row>
                         </td>
                       : 
@@ -131,7 +131,7 @@ import StylesPagination from './StylesPagination'
                           : c.type == 'action'?
                             (
                               <Row style={{padding:0, gap:0, textAlign:'end'}}>
-                                <Col style={{padding:0}}><Button onClick={e=>addnewRow(values)} variant='outline-primary'><Plus size={25}/></Button></Col>
+                                <Col style={{padding:3}}><Button onClick={e=>addnewRow(values)} variant='outline-primary'><Plus size={25}/></Button></Col>
                               </Row>
                            )
                           :null
