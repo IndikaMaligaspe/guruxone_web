@@ -3,7 +3,8 @@ export interface Member  {
     id: number;
     name: string;
     email: string;
-    achiements: string[]; 
+    phone:string,
+    achievements: string[]; 
   }
 
 export interface MemberAchievment {

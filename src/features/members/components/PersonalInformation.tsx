@@ -89,10 +89,10 @@ const PersonalInformation = () => {
                 <Col lg={10}>
                 </Col>
                 <Col>
-                <Button variant='outline-primary'>Reset</Button>
+                <Button variant='outline-primary' onClick={(e)=>{console.log('Save')}}>Reset</Button>
                 </Col>
                 <Col>
-                <Button variant='primary'>Save</Button>
+                <Button variant='primary' onClick={(e)=>{console.log('Save')}}>Save</Button>
                 </Col>
             </Form.Group>
             </Form>

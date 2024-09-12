@@ -34,6 +34,11 @@ import StylesPagination from './StylesPagination'
   const [pages, setPages] = useState(1);
   const [pageCount, setPageCount] = useState(3);
   const [items, setItems] = useState <any>([]);
+  const [rowCols, setRowsCols] = useState<any[]>([]);
+
+  useEffect(()=>{
+    setRowsCols(cols);
+  },[cols])
 
 
   useEffect(()=>{
@@ -45,7 +50,7 @@ import StylesPagination from './StylesPagination'
     let pageStart = page == 1? 0:(page -1)*pageCount;
     let pageEnd = pageStart + pageCount;
     setItems(data.slice(pageStart, pageEnd));
-  },[page]);
+  },[page,data]);
 
   const handleChangePage = (page:number) =>{
     setPage(page)
@@ -77,9 +82,9 @@ import StylesPagination from './StylesPagination'
                 <tr key={d.id}>
                   {
                     
-                    cols.map((c:col)=>(
+                    cols.map((c:col, index)=>(
                       crudField && c.type == 'action'? 
-                        <td width={'8%'}>
+                        <td width={'8%'} key={index}>
                           <Row style={{
                             padding:0, 
                             gap:1, 
@@ -103,8 +108,8 @@ import StylesPagination from './StylesPagination'
               (
                 <>
                    {
-                    cols.map((c:col)=>{
-                      return (<td>
+                    cols.map((c:col, index)=>{
+                      return (<td key={index}>
                         {
                           c.type == 'string'? (
                             (<Form.Control

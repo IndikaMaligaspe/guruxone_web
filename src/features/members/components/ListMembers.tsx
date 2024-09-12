@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
 
 import {Member} from '../../../features/members/types'
+import StyledDataTable from '../../../components/styled/StyledDataTable';
 
 
 
@@ -12,42 +13,51 @@ interface MemberProps {
 
 const ListMembers: React.FC <MemberProps> = ({members}) => {
 
+  const [data, setData] = useState<unknown[]>([]);
+
 
   useEffect(()=>{
-    console.log('MEMBERS -> ', members)
+    let _membersRows = members.map(m=>{
+      return{
+        ...m,
+        achievements:m.achievements.join() 
+      }
+    })
+    setData(_membersRows)
   },[members])
+
+
+  const memberListCols = [
+    {'fieldName':'id', 'column':'#', 'type':'null','style':{width:'10px'}},
+    {'fieldName':'name', 'column':'Name', 'type':'string'},
+    {'fieldName':'phone', 'column':'Phone', 'type':'string'},
+    {'fieldName':'email', 'column':'Email', 'type':'date'},
+    {'fieldName':'achievements', 'column':'Achievements', 'type':'string'},
+    {'fieldName':'action', 'column':'Action', 'type':'action'}];
+  
+  const addnewRow = (e:undefined) =>{
+    console.log('Add Row -> ', e)
+  } 
+ 
+  const editRow = (id:number) =>{
+    console.log('Edit Row -> ', id)
+  }
+
+  const deleteRow = (id:number) =>{
+    console.log('Delete Row -> ', id)
+  }
+
   return (
     <Container>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Achievements</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            members.map((m)=>(
-            <tr key={m.id}>
-              <td>{m.id}</td>
-              <td>{m.name}</td>
-              <td>{m.email}</td>
-              <td>{m.email}</td>
-              <td>{m.achiements.join()}</td>
-              <td>
-                <Button variant="warning" className="mr-2">Edit</Button>
-                <Button variant="danger">Delete</Button>
-              </td>
-            </tr>
-            ))
-          }
-          
-        </tbody>
-      </Table>
+      <StyledDataTable
+              data={data} 
+              cols={memberListCols} 
+              addField = {false} 
+              crudField={true}
+              addnewRow={addnewRow}
+              editRow={editRow}
+              deleteRow={deleteRow}
+              />
     </Container>
   );
 };

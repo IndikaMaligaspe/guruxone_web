@@ -12,19 +12,22 @@ export const fetchMembers = () => async (dispatch: Dispatch) => {
          id:1 , 
          name:' indika',
          email:'sample@sample.com',
-         achiements:['Black Belt'],
+         phone:'(703) - 111 02222',
+         achievements:['Black Belt'],
       },
       {
         id:2 , 
         name:' indika',
+        phone:'(703) - 111 02222',
         email:'sample@sample.com',
-        achiements:['Black Belt'],
+        achievements:['Black Belt'],
      },
      {
       id:3 , 
       name:' indika',
+      phone:'(703) - 111 02222',
       email:'sample@sample.com',
-      achiements:['Black Belt'],
+      achievements:['Black Belt'],
    },
     ]
     dispatch(setMembers(Members));
