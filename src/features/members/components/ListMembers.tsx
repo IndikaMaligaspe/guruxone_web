@@ -8,10 +8,11 @@ import StyledDataTable from '../../../components/styled/StyledDataTable';
 
 
 interface MemberProps {
-  members: Member[]
+  members: Member[];
+  updateStateActions: (action:string, selectedMemberId:number)=>void;
 }
 
-const ListMembers: React.FC <MemberProps> = ({members}) => {
+const ListMembers: React.FC <MemberProps> = ({members, updateStateActions}) => {
 
   const [data, setData] = useState<unknown[]>([]);
 
@@ -20,7 +21,7 @@ const ListMembers: React.FC <MemberProps> = ({members}) => {
     let _membersRows = members.map(m=>{
       return{
         ...m,
-        achievements:m.achievements.join() 
+       achievements:m.achievements.join() 
       }
     })
     setData(_membersRows)
@@ -30,7 +31,7 @@ const ListMembers: React.FC <MemberProps> = ({members}) => {
   const memberListCols = [
     {'fieldName':'id', 'column':'#', 'type':'null','style':{width:'10px'}},
     {'fieldName':'name', 'column':'Name', 'type':'string'},
-    {'fieldName':'phone', 'column':'Phone', 'type':'string'},
+    {'fieldName':'phoneNumber', 'column':'Phone', 'type':'string'},
     {'fieldName':'email', 'column':'Email', 'type':'date'},
     {'fieldName':'achievements', 'column':'Achievements', 'type':'string'},
     {'fieldName':'action', 'column':'Action', 'type':'action'}];
@@ -40,11 +41,11 @@ const ListMembers: React.FC <MemberProps> = ({members}) => {
   } 
  
   const editRow = (id:number) =>{
-    console.log('Edit Row -> ', id)
+    updateStateActions('EDIT', id);
   }
 
   const deleteRow = (id:number) =>{
-    console.log('Delete Row -> ', id)
+    updateStateActions('DELETE', id);
   }
 
   return (

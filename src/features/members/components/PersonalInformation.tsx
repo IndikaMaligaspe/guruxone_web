@@ -1,23 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Container, Col, Form,  Table, Row, Badge } from 'react-bootstrap';
+import { Member } from '../types';
+import moment from 'moment';
 
 
 const memberDetailsInit  ={
   id:'',
   firstName: '',
-  middleName: '',
   lastName: '',
   mobileNumber:'',
   email:'',
-  dob:'',
+  dob:new Date(),
   gender:'',
   address:'',
   city:'',
 };
 
+interface PersonalInformationProps {
+    selectedMember:Member | undefined;
+}
 
-const PersonalInformation = () => {
+const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember}) => {
     const [values, setValues] = useState(memberDetailsInit)
+
+    useEffect(()=>{
+        if(selectedMember){
+            setValues({
+                ...values,
+                firstName:selectedMember?.firstName,
+                lastName:selectedMember?.lastName,
+                address:selectedMember?.address,
+                mobileNumber:selectedMember?.phoneNumber,
+                email:selectedMember?.email,
+                gender:selectedMember?.gender,
+                dob:selectedMember?.dateofBirth,
+            })
+        }
+        
+    },[selectedMember])
     return (
         <Container id='personalDetail'>
             <Row>
@@ -30,10 +50,6 @@ const PersonalInformation = () => {
                 <Col>
                     <Form.Label>First Name</Form.Label>
                     <Form.Control name='firstName' value={values.firstName}></Form.Control>
-                </Col>
-                <Col>
-                    <Form.Label>Middle Name</Form.Label>
-                    <Form.Control name='middleName' value={values.middleName}></Form.Control>
                 </Col>
                 <Col>
                     <Form.Label>Last Name</Form.Label>
@@ -61,13 +77,14 @@ const PersonalInformation = () => {
             <Form.Group as={Row}>
                 <Col lg={3}>
                 <Form.Label>Birth Date</Form.Label>
-                <Form.Control type='date' name='birthDate' value={values.dob}></Form.Control>
+                <Form.Control type='date' name='birthDate' value={moment(values.dob).format("YYYY-MM-DD")}></Form.Control>
                 </Col>
                 <Col lg={3}>
                 <Form.Label>Gender</Form.Label>
                 <Form.Select  name='gender' value={values.gender}>
                     <option>Select</option>
                     <option>him</option>
+                    <option>her</option>
                     <option>nutral</option>
                     <option>prefer not to say</option>
                 </Form.Select>

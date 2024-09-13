@@ -1,11 +1,18 @@
 
 export interface Member  {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
+    name:string;
     email: string;
-    phone:string,
+    phoneNumber:string,
+    gender:string,
+    dateofBirth:Date,
+    address:string,
+    city:string,
     achievements: string[]; 
   }
+
 
 export interface MemberAchievment {
   id:number;
