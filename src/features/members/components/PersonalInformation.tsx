@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Container, Col, Form,  Table, Row, Badge } from 'react-bootstrap';
+import { Button, Container, Col, Form, Row, Badge } from 'react-bootstrap';
 import { Member } from '../types';
 import moment from 'moment';
 
 
 const memberDetailsInit  ={
-  id:'',
+  id:0,
   firstName: '',
   lastName: '',
   mobileNumber:'',
@@ -22,11 +22,13 @@ interface PersonalInformationProps {
 
 const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember}) => {
     const [values, setValues] = useState(memberDetailsInit)
+    const [reset, setReset] = useState(false)
 
     useEffect(()=>{
         if(selectedMember){
             setValues({
                 ...values,
+                id:selectedMember?.id,
                 firstName:selectedMember?.firstName,
                 lastName:selectedMember?.lastName,
                 address:selectedMember?.address,
@@ -34,10 +36,20 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
                 email:selectedMember?.email,
                 gender:selectedMember?.gender,
                 dob:selectedMember?.dateofBirth,
+                city:selectedMember?.city,
             })
+            setReset(false)
         }
         
-    },[selectedMember])
+    },[selectedMember, reset])
+
+    const handleValues = (name:string, value:string|number|Date|undefined) =>{
+        setValues({
+            ...values,
+            [name]:value
+        })
+    }
+
     return (
         <Container id='personalDetail'>
             <Row>
@@ -49,22 +61,28 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
             <Form.Group as={Row}>
                 <Col>
                     <Form.Label>First Name</Form.Label>
-                    <Form.Control name='firstName' value={values.firstName}></Form.Control>
+                    <Form.Control name='firstName' 
+                                  value={values.firstName}
+                                  onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
                 <Col>
                     <Form.Label>Last Name</Form.Label>
-                    <Form.Control name='lastName' value={values.lastName}></Form.Control>
+                    <Form.Control name='lastName' 
+                                  value={values.lastName}
+                                  onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
             </Form.Group>
             <br></br>
             <Form.Group as={Row}>
                 <Col lg={8}>
                     <Form.Label>Address</Form.Label>
-                    <Form.Control name='address' value={values.address}></Form.Control>
+                    <Form.Control name='address' 
+                                  value={values.address}
+                                  onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
                 <Col>
                     <Form.Label>City</Form.Label>
-                    <Form.Select name='city' value={values.city}>
+                    <Form.Select name='city' value={values.city} onChange={e=>handleValues(e.target.name, e.target.value)}>
                     <option>Abu Dabi</option>
                     <option>Ajman</option>
                     <option>Al Amin</option>
@@ -77,11 +95,15 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
             <Form.Group as={Row}>
                 <Col lg={3}>
                 <Form.Label>Birth Date</Form.Label>
-                <Form.Control type='date' name='birthDate' value={moment(values.dob).format("YYYY-MM-DD")}></Form.Control>
+                <Form.Control type='date' name='birthDate' 
+                              value={moment(values.dob).format("YYYY-MM-DD")} 
+                              onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
                 <Col lg={3}>
                 <Form.Label>Gender</Form.Label>
-                <Form.Select  name='gender' value={values.gender}>
+                <Form.Select  name='gender' 
+                              value={values.gender}
+                              onChange={e=>handleValues(e.target.name, e.target.value)}>
                     <option>Select</option>
                     <option>him</option>
                     <option>her</option>
@@ -94,11 +116,16 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
             <Form.Group as={Row}>
                 <Col lg={3}>
                     <Form.Label>Mobile Number</Form.Label>
-                    <Form.Control  name='mobile' value={values.mobileNumber}></Form.Control>
+                    <Form.Control  name='mobile' 
+                                   value={values.mobileNumber}
+                                   onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
                 <Col lg={5}>
                     <Form.Label>Email Address</Form.Label>
-                    <Form.Control type='email' name='email' value={values.email}></Form.Control>
+                    <Form.Control type='email' 
+                                  name='email' 
+                                  value={values.email}
+                                  onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
             </Form.Group>
             <br></br>
@@ -106,7 +133,7 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
                 <Col lg={10}>
                 </Col>
                 <Col>
-                <Button variant='outline-primary' onClick={(e)=>{console.log('Save')}}>Reset</Button>
+                <Button variant='outline-primary' onClick={(e)=>{setReset(true)}}>Reset</Button>
                 </Col>
                 <Col>
                 <Button variant='primary' onClick={(e)=>{console.log('Save')}}>Save</Button>
