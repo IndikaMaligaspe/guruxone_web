@@ -31,6 +31,9 @@ const memberSlice = createSlice({
     addMember(state, action: PayloadAction<Member>) {
       state.members.push(action.payload);
     },
+    updateMember(state, action: PayloadAction<Member>) {
+      state.member = action.payload;
+    },
     setMembersAchievements(state, action: PayloadAction<MemberAchievment[]>) {
       state.memberAchievements = action.payload;
     },

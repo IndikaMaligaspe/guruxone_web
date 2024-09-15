@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
-import { Button, Container, Col, Form,  Table, Row, Badge } from 'react-bootstrap';
+import React from 'react'
+import {  Container } from 'react-bootstrap';
 import PersonalInformation from './PersonalInformation';
 import PersonalAchievements from './PeronalAchievements';
 import {Attendance, Member, MemberAchievment, Payments} from '../../../features/members/types';
 import MemberPayments from './MemberPayments';
 import MemberAttendance from './MemberAttendance';
+
+
+import {useAppSelector} from '../../../redux/hooks';
 
 
 const attendance : Attendance[] = [
@@ -27,15 +30,20 @@ const attendance : Attendance[] = [
 ]
 
 interface AddEditMembersProps {
-  selectedMember:Member | undefined;
-  memberAchievements:MemberAchievment[];
-  memberPayments:Payments[];
+  handleSave: ({}) => void;
 } 
 
-const AddEditMembers :React.FC<AddEditMembersProps> = ({selectedMember,memberAchievements,memberPayments}) => {
+const AddEditMembers :React.FC<AddEditMembersProps> = ({ handleSave}) => {
+
+  const selectedMember:Member | undefined = useAppSelector((state) => state.members.member);
+  const memberAchievements:MemberAchievment[] = useAppSelector((state) => state.members.memberAchievements);
+  const memberPayments:Payments[] = useAppSelector((state) => state.members.memberPayment);
+
   return (
     <Container>
-      <PersonalInformation selectedMember={selectedMember} />
+      <PersonalInformation 
+        selectedMember={selectedMember} 
+        handleSave={handleSave}/>
       <br></br>
       <PersonalAchievements  achievements={memberAchievements}/>
       <br></br>

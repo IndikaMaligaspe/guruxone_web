@@ -18,11 +18,13 @@ const memberDetailsInit  ={
 
 interface PersonalInformationProps {
     selectedMember:Member | undefined;
+    handleSave: ({})=>void;
 }
 
-const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember}) => {
+const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember, handleSave}) => {
     const [values, setValues] = useState(memberDetailsInit)
-    const [reset, setReset] = useState(false)
+    const [reset, setReset] = useState(false);
+    const [save, setSave] = useState(false);
 
     useEffect(()=>{
         if(selectedMember){
@@ -42,6 +44,14 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
         }
         
     },[selectedMember, reset])
+    
+    useEffect(()=>{
+        console.log('SAVE - >', save);
+        if(save){
+            handleSave(values);
+            setSave(false);
+        }
+    },[save]);
 
     const handleValues = (name:string, value:string|number|Date|undefined) =>{
         setValues({
@@ -49,6 +59,8 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
             [name]:value
         })
     }
+
+    
 
     return (
         <Container id='personalDetail'>
@@ -136,7 +148,7 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
                 <Button variant='outline-primary' onClick={(e)=>{setReset(true)}}>Reset</Button>
                 </Col>
                 <Col>
-                <Button variant='primary' onClick={(e)=>{console.log('Save')}}>Save</Button>
+                <Button variant='primary' onClick={(e)=>{setSave(true)}}>Save</Button>
                 </Col>
             </Form.Group>
             </Form>

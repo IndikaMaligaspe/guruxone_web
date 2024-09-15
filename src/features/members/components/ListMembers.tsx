@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import {Member} from '../../../features/members/types'
 import StyledDataTable from '../../../components/styled/StyledDataTable';
 
-
+import {useAppSelector} from '../../../redux/hooks';
 
 
 interface MemberProps {
-  members: Member[];
   updateStateActions: (action:string, selectedMemberId:number)=>void;
 }
 
-const ListMembers: React.FC <MemberProps> = ({members, updateStateActions}) => {
+const ListMembers: React.FC <MemberProps> = ({ updateStateActions}) => {
 
+  const members:Member[] = useAppSelector((state) => state.members.members);
   const [data, setData] = useState<unknown[]>([]);
 
 

@@ -7,7 +7,7 @@ import {BASE_URL} from '../../conf'
 export const fetchMembers = () => async (dispatch: Dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/member/achievments`);
-    if(response.status == 200){
+    if(response.status === 200){
       dispatch(setMembers(response.data.map((m:any)=>{
         return{
           ...m,
@@ -26,7 +26,7 @@ export const fetchMembers = () => async (dispatch: Dispatch) => {
 export const fetchMemberById = (id:number) => async (dispatch: Dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/member/${id}`);
-    if(response.status == 200){
+    if(response.status === 200){
       dispatch(setMember(response.data));
     }
 } catch (error) {
@@ -38,7 +38,7 @@ export const fetchMemberById = (id:number) => async (dispatch: Dispatch) => {
 export const fetchMemberAchivements = (id:number) => async (dispatch: Dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/member/${id}/achievements`);
-    if(response.status == 200){
+    if(response.status === 200){
       dispatch(setMembersAchievements(response.data.map((a:any)=>{
         return{
           ...a,
@@ -54,7 +54,7 @@ export const fetchMemberAchivements = (id:number) => async (dispatch: Dispatch) 
 export const fetchMemberPayments = (id:number) => async (dispatch: Dispatch) => {
   try {
     const response = await axios.get(`${BASE_URL}/member/${id}/payments`);
-    if(response.status == 200){
+    if(response.status === 200){
       dispatch(setMembersPayments(response.data.map((p:any)=>{
         return{
           ...p,
@@ -70,6 +70,15 @@ export const fetchMemberPayments = (id:number) => async (dispatch: Dispatch) => 
 export const createMember = (newMember: any) => async (dispatch: Dispatch) => {
   try {
     const response = await axios.post(`${BASE_URL}/api/members`, newMember);
+  } catch (error) {
+    console.error('Error adding member', error);
+  }
+};
+
+
+export const updateMember = (newMember: any) => async (dispatch: Dispatch) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/api/members`, newMember);
     dispatch(addMember(response.data));
   } catch (error) {
     console.error('Error adding member', error);

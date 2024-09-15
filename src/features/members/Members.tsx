@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-import {useAppDispatch, useAppSelector} from '../../redux/hooks';
-import {fetchMembers, fetchMemberById, fetchMemberAchivements, fetchMemberPayments,  createMember} from './memberActions';
+import {useAppDispatch} from '../../redux/hooks';
+import {fetchMembers, fetchMemberById, fetchMemberAchivements, fetchMemberPayments,  createMember, updateMember} from './memberActions';
 
 import ListMembers from './components/ListMembers';
-
-import {Member, MemberAchievment, Payments} from  './types'
-import { useNavigate } from 'react-router-dom';
 import AddEditMembers from './components/AddEditMembers';
+
 
 
 const Members: React.FC = () => {
   
   const dispatch = useAppDispatch();
-  const members:Member[] = useAppSelector((state) => state.members.members);
-  const selectedMember:Member | undefined = useAppSelector((state) => state.members.member);
-  const memberAchievements:MemberAchievment[] = useAppSelector((state) => state.members.memberAchievements);
-  const memberPayments:Payments[] = useAppSelector((state) => state.members.memberPayment);
+  // const members:Member[] = useAppSelector((state) => state.members.members);
 
   const [reload, setReload] = useState(true);
-  const [addEditMember, setAddEditMember] = useState(false);
   const [action, setAction] = useState(`LIST`);
   const [selectedMemberId, setSelectedMemberId]  = useState<number | null>(null);
 
@@ -45,10 +39,14 @@ const Members: React.FC = () => {
   },[action, selectedMemberId])
 
   const updateStateActions = (action:string, selectedMemberId:number) =>{
-    console.log(action, selectedMemberId);
     setSelectedMemberId(selectedMemberId);
     setAction(action);
   }   
+
+  const handleSave = (values: unknown) =>{
+    if(action === 'EDIT')
+      dispatch(updateMember(values));
+  }
 
   return (
     <Container>
@@ -61,7 +59,7 @@ const Members: React.FC = () => {
             </Row>
             <br></br>
             <Row>
-              <ListMembers members={members} updateStateActions={updateStateActions}/>
+              <ListMembers updateStateActions={updateStateActions}/>
             </Row>
           </Container>
           :
@@ -73,9 +71,7 @@ const Members: React.FC = () => {
             <br></br> 
             <Row>
               <AddEditMembers 
-                selectedMember={selectedMember}
-                memberAchievements={memberAchievements}
-                memberPayments={memberPayments}
+                handleSave={handleSave}
               />
             </Row>
           </Container>
