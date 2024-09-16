@@ -6,24 +6,32 @@ import {fetchMembers, fetchMemberById, fetchMemberAchivements, fetchMemberPaymen
 
 import ListMembers from './components/ListMembers';
 import AddEditMembers from './components/AddEditMembers';
+import StyledMessage from '../../components/styled/StyledMessage';
 
 
+interface ToastProps {
+  message:string;
+  header:string;
+  type:string;
+}
 
 const Members: React.FC = () => {
   
   const dispatch = useAppDispatch();
-  // const members:Member[] = useAppSelector((state) => state.members.members);
 
   const [reload, setReload] = useState(true);
   const [action, setAction] = useState(`LIST`);
   const [selectedMemberId, setSelectedMemberId]  = useState<number | null>(null);
+  const [toast, setToast] = useState<ToastProps>();
+  const [showToast, setShowToast] = useState(false);
+  
 
   useEffect(() =>{
-    if(reload){
+    if(reload || action == 'LIST'){
       dispatch(fetchMembers());
       setReload(false)
     }
-  },[reload]);
+  },[reload, action]);
 
   useEffect(()=>{
      if(selectedMemberId != null){
@@ -45,12 +53,26 @@ const Members: React.FC = () => {
 
   const handleSave = (values: unknown) =>{
     if(action === 'EDIT')
-      dispatch(updateMember(values));
+      if(selectedMemberId)
+        dispatch(updateMember(selectedMemberId, values)).then((res) =>{
+          if (res == 200)
+            setToast({
+              message:'Saved Successfully',
+              type:'success',
+              header:'Success'
+            })
+          else
+            setToast({
+              message:'Error while saving',
+              type:'danger',
+              header:'Error'
+          }) 
+          setShowToast(!showToast)  
+        });
   }
 
   return (
     <Container>
-      
       {action ==='LIST'  ?
          <Container>
            <Row>
@@ -66,12 +88,19 @@ const Members: React.FC = () => {
           <Container> 
             <Row>
               <Col lg={10}><h1>Create / Update Members</h1></Col>
-              <Col><Button variant="primary" className="mb-3" onClick={e=>setAction('LIST')}>List Member</Button></Col>
+              <Col><Button variant="primary" className="mb-3" onClick={e=>{setSelectedMemberId(null);setReload(true);setAction('LIST');}}>List Member</Button></Col>
             </Row> 
             <br></br> 
             <Row>
               <AddEditMembers 
                 handleSave={handleSave}
+              />
+              <StyledMessage 
+                message={toast?.message}
+                type={toast?.type} 
+                header={toast?.header}
+                setShow={setShowToast}
+                show={showToast}
               />
             </Row>
           </Container>

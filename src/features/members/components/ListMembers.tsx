@@ -21,7 +21,7 @@ const ListMembers: React.FC <MemberProps> = ({ updateStateActions}) => {
     let _membersRows = members.map(m=>{
       return{
         ...m,
-       achievements:m.achievements.join() 
+       achievements:m.achievements?.join() 
       }
     })
     setData(_membersRows)

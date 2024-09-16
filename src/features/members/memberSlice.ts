@@ -15,7 +15,7 @@ const initialState: MemberState = {
   members: [],
   memberAchievements:[],
   memberPayment:[],
-  member:undefined
+  member:undefined,
 };
 
 const memberSlice = createSlice({
@@ -32,6 +32,7 @@ const memberSlice = createSlice({
       state.members.push(action.payload);
     },
     updateMember(state, action: PayloadAction<Member>) {
+      console.log('PAYLOAD -> ',action.payload)
       state.member = action.payload;
     },
     setMembersAchievements(state, action: PayloadAction<MemberAchievment[]>) {
@@ -43,5 +44,5 @@ const memberSlice = createSlice({
   },
 });
 
-export const {  addMember, setMembers, setMember, setMembersAchievements, setMembersPayments } = memberSlice.actions;
+export const {  addMember, setMembers, setMember, setMembersAchievements, setMembersPayments , updateMember} = memberSlice.actions;
 export default memberSlice.reducer;

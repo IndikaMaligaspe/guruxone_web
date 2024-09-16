@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { setMembers, setMember, addMember, setMembersAchievements, setMembersPayments } from './memberSlice';
+import { setMembers, setMember, addMember, setMembersAchievements, setMembersPayments} from './memberSlice';
 
 import {BASE_URL} from '../../conf'
 
@@ -69,18 +69,24 @@ export const fetchMemberPayments = (id:number) => async (dispatch: Dispatch) => 
 
 export const createMember = (newMember: any) => async (dispatch: Dispatch) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/members`, newMember);
+    const response = await axios.post(`${BASE_URL}/member`, newMember);
   } catch (error) {
     console.error('Error adding member', error);
   }
 };
 
 
-export const updateMember = (newMember: any) => async (dispatch: Dispatch) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/api/members`, newMember);
-    dispatch(addMember(response.data));
-  } catch (error) {
-    console.error('Error adding member', error);
-  }
+export const updateMember = (id:number, newMember: any) => async (dispatch: Dispatch) => {
+  
+    return new Promise( async (resolve, reject) =>{
+      try {
+        const response = await axios.put(`${BASE_URL}/member/${id}`, newMember);
+        dispatch(setMember(response.data));
+        resolve(response.status)
+      } catch (error) {
+        console.error('Error adding member', error);
+        resolve(500)
+      }
+    })
+    
 };

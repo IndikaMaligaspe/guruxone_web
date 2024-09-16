@@ -8,9 +8,9 @@ const memberDetailsInit  ={
   id:0,
   firstName: '',
   lastName: '',
-  mobileNumber:'',
+  phoneNumber:'',
   email:'',
-  dob:new Date(),
+  dateofBirth:new Date(),
   gender:'',
   address:'',
   city:'',
@@ -34,10 +34,10 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
                 firstName:selectedMember?.firstName,
                 lastName:selectedMember?.lastName,
                 address:selectedMember?.address,
-                mobileNumber:selectedMember?.phoneNumber,
+                phoneNumber:selectedMember?.phoneNumber,
                 email:selectedMember?.email,
                 gender:selectedMember?.gender,
-                dob:selectedMember?.dateofBirth,
+                dateofBirth:selectedMember?.dateofBirth,
                 city:selectedMember?.city,
             })
             setReset(false)
@@ -107,8 +107,8 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
             <Form.Group as={Row}>
                 <Col lg={3}>
                 <Form.Label>Birth Date</Form.Label>
-                <Form.Control type='date' name='birthDate' 
-                              value={moment(values.dob).format("YYYY-MM-DD")} 
+                <Form.Control type='date' name='dateofBirth' 
+                              value={moment(values.dateofBirth).format("YYYY-MM-DD")} 
                               onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
                 <Col lg={3}>
@@ -128,8 +128,8 @@ const PersonalInformation: React.FC<PersonalInformationProps> = ({selectedMember
             <Form.Group as={Row}>
                 <Col lg={3}>
                     <Form.Label>Mobile Number</Form.Label>
-                    <Form.Control  name='mobile' 
-                                   value={values.mobileNumber}
+                    <Form.Control  name='phoneNumber' 
+                                   value={values.phoneNumber}
                                    onChange={e=>handleValues(e.target.name, e.target.value)}></Form.Control>
                 </Col>
                 <Col lg={5}>
